@@ -1,5 +1,6 @@
-# Style Aggregated Network for Facial Landmark Detection
+# The Source Codes will come soon before 1st June.
 
+# Style Aggregated Network for Facial Landmark Detection
 We provide the training and testing codes for [SAN](https://d-x-y.github.io/publication/style-aggregation-network), implemented in [PyTorch](pytorch.org).
 
 ## Preparation
@@ -14,8 +15,6 @@ We provide the training and testing codes for [SAN](https://d-x-y.github.io/publ
 - In 300W-Style and AFLW-Style directories, the `Original` sub-directory contains the original images from [300-W](https://ibug.doc.ic.ac.uk/resources/300-W/) and [AFLW](https://www.tugraz.at/institute/icg/research/team-bischof/lrs/downloads/aflw/)
 <img src="cache_data/cache/dataset.jpg" width="480">
 Figure 1. Our 300W-Style and AFLW-Style datasets. There are four styles, original, sketch, light, and gray.
-
-# The Core Codes will come soon before 1st June.
 
 ### Generate lists for training and evaluation
 ```
