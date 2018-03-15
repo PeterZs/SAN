@@ -52,9 +52,9 @@ def return_box(image_path, pts_path, all_dict, USE_BOX):
   if USE_BOX == 'GTL':
     box_str = datasets.dataset_utils.for_generate_box_str(pts_path, 68, 0)
   elif USE_BOX == 'GTB':
-    box_str = '{:.4f} {:.4f} {:.4f} {:.4f}'.format(np_boxes[1][0], np_boxes[1][1], np_boxes[1][2], np_boxes[1][3])
+    box_str = '{:.3f} {:.3f} {:.3f} {:.3f}'.format(np_boxes[1][0], np_boxes[1][1], np_boxes[1][2], np_boxes[1][3])
   elif USE_BOX == 'DET':
-    box_str = '{:.4f} {:.4f} {:.4f} {:.4f}'.format(np_boxes[0][0], np_boxes[0][1], np_boxes[0][2], np_boxes[0][3])
+    box_str = '{:.3f} {:.3f} {:.3f} {:.3f}'.format(np_boxes[0][0], np_boxes[0][1], np_boxes[0][2], np_boxes[0][3])
   else:
     assert False, 'The box indicator not find : {}'.format(USE_BOX)
   return box_str
@@ -149,7 +149,7 @@ def generage_300w_list(root, save_dir, box_data, SUFFIX):
 
   with open(osp.join(save_dir, '300w.all.' + SUFFIX), 'w') as txtfile:
     for line in all_lines:
-      txtfile.write('{}\n'.format(line))
+      txtfile.write('{}'.format(line))
   txtfile.close()
 
 if __name__ == '__main__':

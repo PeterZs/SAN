@@ -1,6 +1,7 @@
 # The Source Codes will come soon before 1st June.
 
-# Style Aggregated Network for Facial Landmark Detection
+# [Style Aggregated Network for Facial Landmark Detection](https://arxiv.org/abs/1803.04108)
+
 We provide the training and testing codes for [SAN](https://d-x-y.github.io/publication/style-aggregation-network), implemented in [PyTorch](pytorch.org).
 
 ## Preparation
@@ -24,11 +25,12 @@ python generate_300W.py
 ```
 The generated list file will be saved into `./cache_data/lists/300W` and `./cache_data/lists/AFLW`.
 
-### Prepare images for the style-aggregated face generation module
+### Prepare images for training the style-aggregated face generation module
 ```
 python crop_pic.py
 ```
-The above commands are used to pre-crop the face images.
+The above commands will pre-crop the face images, and save them into `./cache_data/cache/300W` and `./cache_data/cache/AFLW`.
+
 
 ## Training and Evaluation
 
@@ -39,6 +41,7 @@ The above commands are used to pre-crop the face images.
 ### AFLW
 - Step-1 : cluster images into different groups, for example `sh scripts/AFLW/AFLW_Cluster.sh 0,1 GTB 3`.
 - Step-2 : use `sh scripts/AFLW/AFLW_CYCLE_128.FULL.sh` or `sh scripts/AFLW/AFLW_CYCLE_128.FRONT.sh` to train SAN on AFLW.
+
 
 ## Citation
 Please cite the following paper in your publications if it helps your research:

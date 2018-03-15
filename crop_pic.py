@@ -28,16 +28,22 @@ def crop_style(list_file, num_pts, save_dir):
     if i % PRINT_GAP == 0:
       print ('--->>> process the {:4d}/{:4d}-th image'.format(i, len(data)))
 
+
 if __name__ == '__main__':
+
+  this_dir = osp.dirname(osp.abspath(__file__))
+  print ('The root dir is : {}'.format(this_dir))
+
   styles = ['Original', 'Gray', 'Light', 'Sketch']
-  for style in styles:
-    list_file = ['./cache_data/lists/300W/{}/300w.train.GTB'.format(style),
-                 './cache_data/lists/300W/{}/300w.test.full.GTB'.format(style)]
-    crop_style(list_file, 68, osp.join('..', 'cache_data', 'cache', '300W', style))
 
   for style in styles:
-    list_file = ['./cache_data/lists/AFLW/{}/all.GTB'.format(style)]
-    crop_style(list_file, 19, osp.join('..', 'cache_data', 'cache', 'AFLW', style))
+    list_file = ['./cache_data/lists/300W/{:}/300w.train.GTB'.format(style),
+                 './cache_data/lists/300W/{:}/300w.test.full.GTB'.format(style)]
+    crop_style(list_file, 68, osp.join(this_dir, 'cache_data', 'cache', '300W', style))
+
+  for style in styles:
+    list_file = ['./cache_data/lists/AFLW/{:}/all.GTB'.format(style)]
+    crop_style(list_file, 19, osp.join(this_dir, 'cache_data', 'cache', 'AFLW', style))
 
   #crop_style(['./snapshots/CLUSTER-300W_GTB-3/cluster-00-03.lst'], 68, osp.join('..', 'cache_data', 'cache', 'clusters', '300W-0'))
   #crop_style(['./snapshots/CLUSTER-300W_GTB-3/cluster-01-03.lst'], 68, osp.join('..', 'cache_data', 'cache', 'clusters', '300W-1'))
