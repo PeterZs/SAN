@@ -13,7 +13,8 @@ We provide the training and testing codes for [SAN](https://d-x-y.github.io/publ
 
 ### Datasets download
 - Download 300W-Style and AFLW-Style from [Google Drive](https://drive.google.com/open?id=14f2lcJVF6E4kIICd8icUs8UuF3J0Mutd), and extract the downloaded files into `~/datasets/`.
-- In 300W-Style and AFLW-Style directories, the `Original` sub-directory contains the original images from [300-W](https://ibug.doc.ic.ac.uk/resources/300-W/) and [AFLW](https://www.tugraz.at/institute/icg/research/team-bischof/lrs/downloads/aflw/)
+- In 300W-Style and AFLW-Style directories, the `Original` sub-directory contains the original images from [300-W](https://ibug.doc.ic.ac.uk/resources/300-W/) and [AFLW](https://www.tugraz.at/institute/icg/research/team-bischof/lrs/downloads/aflw/).
+- The sketch, light, and gray style images are used to analyze the image style variance in facial landmark detection.
 <img src="cache_data/cache/dataset.jpg" width="480">
 Figure 1. Our 300W-Style and AFLW-Style datasets. There are four styles, original, sketch, light, and gray.
 
@@ -48,7 +49,7 @@ Please cite the following paper in your publications if it helps your research:
 ```
 @inproceedings{dong2018san,
    title={Style Aggregated Network for Facial Landmark Detection},
-   author={Dong, Xuanyi and Yan, Yan and Ouyang, Wanli and Yi, Yang},
+   author={Dong, Xuanyi and Yan, Yan and Ouyang, Wanli and Yang, Yi},
    booktitle={Computer Vision and Pattern Recognition},
    year={2018},
 }
