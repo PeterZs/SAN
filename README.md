@@ -1,5 +1,3 @@
-# The Source Codes will come soon before 1st June.
-
 # [Style Aggregated Network for Facial Landmark Detection](https://arxiv.org/abs/1803.04108)
 
 We provide the training and testing codes for [SAN](https://d-x-y.github.io/publication/style-aggregation-network), implemented in [PyTorch](pytorch.org).
@@ -8,7 +6,7 @@ We provide the training and testing codes for [SAN](https://d-x-y.github.io/publ
 
 ### Dependencies
 - [Python3.6](https://www.anaconda.com/download/#linux)
-- [PyTorch](http://pytorch.org/)
+- [PyTorch=0.3.1](http://pytorch.org/)
 - [torchvision](http://pytorch.org/docs/master/torchvision)
 
 ### Datasets download
@@ -70,7 +68,13 @@ Please cite the following paper in your publications if it helps your research:
    title={Style Aggregated Network for Facial Landmark Detection},
    author={Dong, Xuanyi and Yan, Yan and Ouyang, Wanli and Yang, Yi},
    booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
-   year={2018},
+   year={2018}
+}
+@inproceedings{dong2018sbr,
+  title={{Supervision-by-Registration}: An Unsupervised Approach to Improve the Precision of Facial Landmark Detectors},
+  author={Dong, Xuanyi and Yu, Shoou-I and Weng, Xinshuo and Wei, Shih-En and Yang, Yi and Sheikh, Yaser},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+  year={2018}
 }
 ```
 
