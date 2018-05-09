@@ -9,7 +9,7 @@ We provide the training and testing codes for [SAN](https://d-x-y.github.io/publ
 - [PyTorch=0.3.1](http://pytorch.org/)
 - [torchvision](http://pytorch.org/docs/master/torchvision)
 
-### Datasets download
+### Datasets Download
 - Download 300W-Style and AFLW-Style from [Google Drive](https://drive.google.com/open?id=14f2lcJVF6E4kIICd8icUs8UuF3J0Mutd), and extract the downloaded files into `~/datasets/`.
 - In 300W-Style and AFLW-Style directories, the `Original` sub-directory contains the original images from [300-W](https://ibug.doc.ic.ac.uk/resources/300-W/) and [AFLW](https://www.tugraz.at/institute/icg/research/team-bischof/lrs/downloads/aflw/).
 - The sketch, light, and gray style images are used to analyze the image style variance in facial landmark detection.

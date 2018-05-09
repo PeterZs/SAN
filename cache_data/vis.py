@@ -12,7 +12,8 @@ PRINT_GAP = 500
 
 def visual(clist, cdir, num_pts):
   if not cdir.exists(): os.makedirs(str(cdir))
-  transform  = transforms.Compose([transforms.PreCrop(0.2), transforms.TrainScale2WH((128, 128))])
+  shape = 256
+  transform  = transforms.Compose([transforms.PreCrop(0.2), transforms.TrainScale2WH((shape, shape))])
   data = datasets.GeneralDataset(transform, 2, 1, 'gaussian', 'test')
   data.load_list(clist, num_pts, True)
   for i, tempx in enumerate(data):
