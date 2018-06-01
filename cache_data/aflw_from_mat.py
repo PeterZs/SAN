@@ -10,13 +10,12 @@ import datasets
 #Change this paths according to your directories
 this_dir = osp.dirname(os.path.abspath(__file__))
 SAVE_DIR = osp.join(this_dir, 'lists', 'AFLW')
-HOME_STR = 'DOME_HOME'
-if HOME_STR not in os.environ: HOME_STR = 'HOME'
+HOME_STR = 'HOME'
 assert HOME_STR in os.environ, 'Doest not find the HOME dir : {}'.format(HOME_STR)
 print ('This dir : {}, HOME : [{}] : {}'.format(this_dir, HOME_STR, os.environ[HOME_STR]))
 if not osp.isdir(SAVE_DIR): os.makedirs(SAVE_DIR)
-image_dir = osp.join(os.environ[HOME_STR], 'datasets', 'AFLW-Convert')
-annot_dir = osp.join(os.environ[HOME_STR], 'datasets', 'AFLW-Convert', 'annotation')
+image_dir = osp.join(os.environ[HOME_STR], 'datasets', 'AFLW-Style')
+annot_dir = osp.join(os.environ[HOME_STR], 'datasets', 'AFLW-Style', 'annotation')
 print ('data dir : {}'.format(image_dir))
 print ('annotation dir : {}'.format(annot_dir))
 

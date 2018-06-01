@@ -3,7 +3,7 @@
 ### Style Aggregated Network for Facial Landmark Detection ###
 ### Computer Vision and Pattern Recognition, 2018          ###
 ##############################################################
-import os
+import os, copy
 import os.path as osp
 import torch
 import time, numpy as np
@@ -64,6 +64,7 @@ def train_san_epoch(opt, net, train_loader, eval_loaders, log):
     # remember best prec@1 and save checkpoint
     save_name = save_checkpoint({
           'epoch': epoch,
+          'args' : copy.deepcopy(opt),
           'state_dict': net.state_dict(),
           'optimizer' : optimizer.state_dict(),
           }, opt.save_path, 'checkpoint_{}.pth.tar'.format(epoch), log)

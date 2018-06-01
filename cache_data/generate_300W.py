@@ -2,6 +2,7 @@ import numpy as np
 import math, pdb
 import os, sys
 import os.path as osp
+from pathlib import Path
 import init_path
 import datasets
 from scipy.io import loadmat
@@ -31,12 +32,12 @@ def load_mats(lists):
 
 def load_all_300w(root_dir, style):
   mat_dir = osp.join(root_dir, 'Bounding_Boxes')
-  pairs = [(osp.join(mat_dir, 'bounding_boxes_lfpw_testset.mat'),   osp.join(root_dir, '300W-' + style, 'lfpw', 'testset')),
-           (osp.join(mat_dir, 'bounding_boxes_lfpw_trainset.mat'),  osp.join(root_dir, '300W-' + style, 'lfpw', 'trainset')),
-           (osp.join(mat_dir, 'bounding_boxes_ibug.mat'),           osp.join(root_dir, '300W-' + style, 'ibug')),
-           (osp.join(mat_dir, 'bounding_boxes_afw.mat'),            osp.join(root_dir, '300W-' + style, 'afw')),
-           (osp.join(mat_dir, 'bounding_boxes_helen_testset.mat'),  osp.join(root_dir, '300W-' + style, 'helen', 'testset')),
-           (osp.join(mat_dir, 'bounding_boxes_helen_trainset.mat'), osp.join(root_dir, '300W-' + style, 'helen', 'trainset')),]
+  pairs = [(osp.join(mat_dir,  'bounding_boxes_lfpw_testset.mat'),   osp.join(root_dir, '300W-' + style, 'lfpw', 'testset')),
+           (osp.join(mat_dir,  'bounding_boxes_lfpw_trainset.mat'),  osp.join(root_dir, '300W-' + style, 'lfpw', 'trainset')),
+           (osp.join(mat_dir,  'bounding_boxes_ibug.mat'),           osp.join(root_dir, '300W-' + style, 'ibug')),
+           (osp.join(mat_dir,  'bounding_boxes_afw.mat'),            osp.join(root_dir, '300W-' + style, 'afw')),
+           (osp.join(mat_dir,  'bounding_boxes_helen_testset.mat'),  osp.join(root_dir, '300W-' + style, 'helen', 'testset')),
+           (osp.join(mat_dir,  'bounding_boxes_helen_trainset.mat'), osp.join(root_dir, '300W-' + style, 'helen', 'trainset')),]
 
   all_datas = load_mats(pairs)
   data_dict = {}
@@ -70,27 +71,6 @@ def generage_300w_list(root, save_dir, box_data, SUFFIX):
   indoor, indoor_num = load_list_from_folders([osp.join(root, '300W', '01_Indoor')], ext_filter=['png', 'jpg', 'jpeg'], depth=3)
   otdoor, otdoor_num = load_list_from_folders([osp.join(root, '300W', '02_Outdoor')], ext_filter=['png', 'jpg', 'jpeg'], depth=3)
   assert indoor_num == 300 and otdoor_num == 300, 'The number of images are not right for 300-W-IO: {} & {}'.format(indoor_num, otdoor_num)
-
-  """
-  iofile = open(osp.join(save_dir, '300w.inout.lst'), 'w')
-  txtfile = open(osp.join(save_dir, '300w.indoor.lst'), 'w')
-  for image_path in indoor:
-    name, ext = osp.splitext(image_path)
-    anno_path = name + '.pts'
-    box_str = return_box(image_path, anno_path, box_data)
-    txtfile.write('{} {} {}\n'.format(image_path, anno_path, box_str))
-    iofile.write('{} {} {}\n'.format(image_path, anno_path, box_str))
-  txtfile.close()
-  txtfile = open(osp.join(save_dir, '300w.outdoor.lst'), 'w')
-  for image_path in otdoor:
-    name, ext = osp.splitext(image_path)
-    anno_path = name + '.pts'
-    box_str = return_box(image_path, anno_path, box_data)
-    txtfile.write('{} {} {}\n'.format(image_path, anno_path, box_str))
-    iofile.write('{} {} {}\n'.format(image_path, anno_path, box_str))
-  txtfile.close()
-  iofile.close()
-  """
 
   train_set, common_set, challeng_set = [], [], []
   for image_path in imagelist:
@@ -153,12 +133,12 @@ def generage_300w_list(root, save_dir, box_data, SUFFIX):
   txtfile.close()
 
 if __name__ == '__main__':
-  HOME_STR = 'DOME_HOME'
-  if HOME_STR not in os.environ: HOME_STR = 'HOME'
-  assert HOME_STR in os.environ, 'Doest not find the HOME dir : {}'.format(HOME_STR)
   this_dir = osp.dirname(os.path.abspath(__file__))
-  print ('This dir : {}, HOME : [{}] : {}'.format(this_dir, HOME_STR, os.environ[HOME_STR]))
-  path_300w = osp.join( os.environ[HOME_STR], 'datasets', '300W-Convert' )
+  print ('This dir : {:}, {:}'.format(this_dir, os.environ['HOME']))
+  path_300w = Path.home() / 'datasets' / '300W-Style'
+  print ('300W Dir : {:}'.format(path_300w))
+  assert path_300w.exists(), '{:} does not exists'.format(path_300w)
+  path_300w = str(path_300w)
   styles = ['Original', 'Gray', 'Light', 'Sketch']
   USE_BOXES = ['GTB', 'DET']
   for USE_BOX in USE_BOXES:
