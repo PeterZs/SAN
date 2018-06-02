@@ -14,9 +14,7 @@ height=224
 width=224
 dataset_name=AFLW_$2
 
-export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$DOME_HOME/.local/cudnn/lib64"
-
-CUDA_VISIBLE_DEVICES=${gpus} $PYTHON base_cluster.py \
+CUDA_VISIBLE_DEVICES=${gpus} python base_cluster.py \
     --train_list ./cache_data/lists/AFLW/Original/train.$2 \
         	 ./cache_data/lists/AFLW/Original/test.$2 \
     --num_pts 68 --pre_crop_expand 0.2 \

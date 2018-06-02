@@ -14,8 +14,6 @@ height=224
 width=224
 dataset_name=AFLW_$2
 
-export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$DOME_HOME/.local/cudnn/lib64"
-
 CUDA_VISIBLE_DEVICES=${gpus} python cluster.py \
     --style_train_root ./cache_data/cache/AFLW \
     --style_eval_root ./cache_data/cache/300W \

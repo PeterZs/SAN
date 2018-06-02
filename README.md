@@ -77,7 +77,7 @@ The above commands will pre-crop the face images, and save them into `./cache_da
 
 ### Evaluation on the Single Image
 
-#### Normalization
+### Normalization
 
 <img src="cache_data/cache/figure_1_68.jpg" width="480">
 Figure 2. We use the distance between the outer corners of the eyes, i.e., the 37-th and the 46-th points, for normalization.

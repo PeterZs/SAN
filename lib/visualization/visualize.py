@@ -77,7 +77,7 @@ def draw_image_with_pts(_image, pts, radius = 10, color = (193,255,193), fontSca
   try:
     font = ImageFont.truetype('Pillow/Tests/fonts/FreeMono.ttf', fontScale)
   except:
-    font_path = osp.join(os.environ['DOME_HOME'], '.fonts', 'freefont', 'FreeMono.ttf')
+    font_path = osp.join(os.environ['HOME'], '.fonts', 'freefont', 'FreeMono.ttf')
     font = ImageFont.truetype(font_path, fontScale)
 
   line_radius = abs(radius)

@@ -17,9 +17,7 @@ height=128
 width=128
 dataset_name=AFLW_FULL_GTB
 
-export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$DOME_HOME/.local/cudnn/lib64"
-
-CUDA_VISIBLE_DEVICES=${gpus} $PYTHON san_main.py \
+CUDA_VISIBLE_DEVICES=${gpus} python san_main.py \
     --train_list ./cache_data/lists/AFLW/Original/train.GTB \
     --eval_lists ./cache_data/lists/AFLW/Original/test.GTB \
     --cycle_a_lists ./snapshots/CLUSTER-AFLW_GTB-3/cluster-00-03.lst \
