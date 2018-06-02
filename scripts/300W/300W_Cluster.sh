@@ -14,8 +14,6 @@ height=224
 width=224
 dataset_name=300W_$2
 
-export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$DOME_HOME/.local/cudnn/lib64"
-
 CUDA_VISIBLE_DEVICES=${gpus} python cluster.py \
     --style_train_root ./cache_data/cache/300W \
     --style_eval_root ./cache_data/cache/AFLW \
@@ -28,5 +26,5 @@ CUDA_VISIBLE_DEVICES=${gpus} python cluster.py \
     --dataset_name ${dataset_name} \
     --scale_min 1 --scale_max 1 --scale_eval 1 --eval_batch ${batch_size} --batch_size ${batch_size} \
     --crop_height ${height} --crop_width ${width} --crop_perturb_max 30 \
-    --sigma 3 --print_freq 100 --print_freq_eval 200 --pretrain --gpu_ids 0 \
+    --sigma 3 --print_freq 50 --print_freq_eval 100 --pretrain \
     --evaluation --heatmap_type gaussian --argmax_size 3 --n_clusters ${cluster}

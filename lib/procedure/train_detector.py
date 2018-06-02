@@ -98,15 +98,11 @@ def train(train_loader, net, criterion, optimizer, epoch, opt, log):
     # inputs : Batch, Squence, Channel, Height, Width
     # data prepare
     target = target.cuda(async=True)
-    input_vars = torch.autograd.Variable(inputs)
-    sign_var   = torch.autograd.Variable(label_sign, requires_grad=False)
-    target_var = torch.autograd.Variable(target, requires_grad=False)
-    points_var = torch.autograd.Variable(points, requires_grad=False)
     # get the real mask
     mask.masked_scatter_((1-label_sign).unsqueeze(-1).unsqueeze(-1), torch.ByteTensor(mask.size()).zero_())
-    mask_var   = torch.autograd.Variable(mask.cuda(async=True), requires_grad=False)
+    mask_var   = mask.cuda(async=True)
 
-    batch_size, num_pts = input_vars.size(0), mask.size(1)-1
+    batch_size, num_pts = inputs.size(0), mask.size(1)-1
     image_index = variable2np(image_index).squeeze(1).tolist()
     # check the label indicator, whether is has annotation or not
     sign_list = variable2np(label_sign).astype('bool').squeeze(1).tolist()
@@ -119,17 +115,17 @@ def train(train_loader, net, criterion, optimizer, epoch, opt, log):
     # batch_cpms is a list for CPM stage-predictions, each element should be [Batch, Squence, C, H, W]
     # batch_locs and batch_scos are two sequence-list of point-list, each element is [Batch, 2] / [Batch, 1]
     # batch_next and batch_back are two sequence-list of point-list, each element is [Batch, 2] / [Batch, 2]
-    batch_cpms, batch_locs, batch_scos, generated = net(input_vars)
+    batch_cpms, batch_locs, batch_scos, generated = net(inputs)
     
     forward_time.update(time.time() - end)
 
     total_labeled_cpm = int(np.sum(sign_list))
 
     # collect all cpm stages for the middle frame
-    cpm_loss, each_stage_loss_values = compute_stage_loss(criterion, target_var, batch_cpms, mask_var, total_labeled_cpm, opt.weight_of_idt)
+    cpm_loss, each_stage_loss_values = compute_stage_loss(criterion, target, batch_cpms, mask_var, total_labeled_cpm, opt.weight_of_idt)
   
     # measure accuracy and record loss
-    losses.update(cpm_loss.data[0], batch_size)
+    losses.update(cpm_loss.item(), batch_size)
     # compute gradient and do SGD step
     optimizer.zero_grad()
     cpm_loss.backward()
@@ -150,12 +146,12 @@ def train(train_loader, net, criterion, optimizer, epoch, opt, log):
                     epoch, opt.epochs, i, len(train_loader), batch_time=batch_time,
                     data_time=data_time, forward_time=forward_time, loss=losses)
                   + last_time + show_stage_loss(each_stage_loss_values) \
-                  + ' In={} Tar={} Mask={}'.format(convert_size2str(input_vars.size()), convert_size2str(target_var.size()), convert_size2str(mask_var.size())) \
+                  + ' In={} Tar={} Mask={}'.format(convert_size2str(inputs.size()), convert_size2str(target.size()), convert_size2str(mask_var.size())) \
                   + ' Vis-PTS : {:2d} ({:.1f})'.format(int(visible_points.val), visible_points.avg), log)
 
     # Just for debug and show the intermediate results.
     if opt.debug_save:
       print_log('DEBUG --- > [{:03d}/{:03d}] '.format(i, len(train_loader)), log)
-      main_debug_save(debug_save_dir, train_loader, image_index, input_vars, batch_locs, target, points, sign_list, batch_cpms, generated, log)
+      main_debug_save(debug_save_dir, train_loader, image_index, inputs, batch_locs, target, points, sign_list, batch_cpms, generated, log)
   
   return losses.avg

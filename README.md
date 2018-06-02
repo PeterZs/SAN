@@ -6,7 +6,7 @@ We provide the training and testing codes for [SAN](https://d-x-y.github.io/publ
 
 ### Dependencies
 - [Python3.6](https://www.anaconda.com/download/#linux)
-- [PyTorch=0.3.1](http://pytorch.org/)
+- [PyTorch=0.4](http://pytorch.org/)
 - [torchvision](http://pytorch.org/docs/master/torchvision)
 
 ### Datasets Download

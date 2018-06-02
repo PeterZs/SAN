@@ -17,9 +17,7 @@ height=128
 width=128
 dataset_name=300W-1-2_$2
 
-export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$DOME_HOME/.local/cudnn/lib64"
-
-CUDA_VISIBLE_DEVICES=${gpus} $PYTHON san_main.py \
+CUDA_VISIBLE_DEVICES=${gpus} python san_main.py \
     --train_list ./cache_data/lists/300W/Original/300w.train.$2 \
     --eval_lists ./cache_data/lists/300W/Original/300w.test.common.$2 \
         	 ./cache_data/lists/300W/Original/300w.test.challenge.$2 \

@@ -72,7 +72,7 @@ def main():
   cls_train_dataset = visiondatasets.ImageFolder(
         cls_train_dir,
         visiontransforms.Compose([
-            visiontransforms.RandomSizedCrop(224),
+            visiontransforms.RandomResizedCrop(224),
             visiontransforms.RandomHorizontalFlip(),
             visiontransforms.ToTensor(),
             vision_normalize,
@@ -85,7 +85,7 @@ def main():
     assert osp.isdir(cls_eval_dir), 'Does not know : {}'.format(cls_eval_dir)
     val_loader = torch.utils.data.DataLoader(
         visiondatasets.ImageFolder(cls_eval_dir, visiontransforms.Compose([
-            visiontransforms.Scale(256),
+            visiontransforms.Resize(256),
             visiontransforms.CenterCrop(224),
             visiontransforms.ToTensor(),
             vision_normalize,
@@ -99,41 +99,40 @@ def main():
     print_log('epoch : [{}/{}] lr={}'.format(epoch, args.epochs, learning_rate), log)
     top1, losses = AverageMeter(), AverageMeter()
     resnet.train()
-    for i, (input, target) in enumerate(cls_train_loader):
+    for i, (inputs, target) in enumerate(cls_train_loader):
       target = target.cuda(async=True)
-      input_var = torch.autograd.Variable(input)
-      target_var = torch.autograd.Variable(target)
       # compute output
-      _, output = resnet(input_var)
-      loss = criterion(output, target_var)
+      _, output = resnet(inputs)
+      loss = criterion(output, target)
 
       # measure accuracy and record loss
       prec1 = accuracy(output.data, target, topk=[1])
-      top1.update(prec1[0], input.size(0))
-      losses.update(loss.data[0], input.size(0))
+      top1.update(prec1.item(), inputs.size(0))
+      losses.update(loss.item(), inputs.size(0))
       # compute gradient and do SGD step
       optimizer.zero_grad()
       loss.backward()
       optimizer.step()
       if i % args.print_freq == 0 or i+1 == len(cls_train_loader):
-        print_log(' [Train={:03d}] [{:}] [{:3d}/{:3d}] accuracy : {:.1f}, loss : {:.4f}, input:{:}, output:{:}'.format(epoch, time_string(), i, len(cls_train_loader), top1.avg, losses.avg, input_var.size(), output.size()), log)
+        print_log(' [Train={:03d}] [{:}] [{:3d}/{:3d}] accuracy : {:.1f}, loss : {:.4f}, input:{:}, output:{:}'.format(epoch, time_string(), i, len(cls_train_loader), top1.avg, losses.avg, inputs.size(), output.size()), log)
+
     if val_loader is None: continue
+
     # evaluate the model
     resnet.eval()
     top1, losses = AverageMeter(), AverageMeter()
-    for i, (input, target) in enumerate(val_loader):
+    for i, (inputs, target) in enumerate(val_loader):
       target = target.cuda(async=True)
-      input_var = torch.autograd.Variable(input, volatile=True)
-      target_var = torch.autograd.Variable(target, volatile=True)
       # compute output
-      _, output = resnet(input_var)
-      loss = criterion(output, target_var)
-      # measure accuracy and record loss
-      prec1 = accuracy(output.data, target, topk=[1])
-      top1.update(prec1[0], input.size(0))
-      losses.update(loss.data[0], input.size(0))
+      with torch.no_grad():
+        _, output = resnet(inputs)
+        loss = criterion(output, target)
+        # measure accuracy and record loss
+        prec1 = accuracy(output.data, target, topk=[1])
+      top1.update(prec1.item(), inputs.size(0))
+      losses.update(loss.item(), inputs.size(0))
       if i % args.print_freq_eval == 0 or i+1 == len(val_loader):
-        print_log(' [Evalu={:03d}] [{:}] [{:3d}/{:3d}] accuracy : {:.1f}, loss : {:.4f}, input:{:}, output:{:}'.format(epoch, time_string(), i, len(val_loader), top1.avg, losses.avg, input_var.size(), output.size()), log)
+        print_log(' [Evalu={:03d}] [{:}] [{:3d}/{:3d}] accuracy : {:.1f}, loss : {:.4f}, input:{:}, output:{:}'.format(epoch, time_string(), i, len(val_loader), top1.avg, losses.avg, inputs.size(), output.size()), log)
     
 
   # extract features
@@ -165,9 +164,9 @@ def main():
   assert args.n_clusters >= 2, 'The cluster number must be greater than 2'
   all_features = []
   for i, (inputs, target, mask, points, image_index, label_sign, ori_size) in enumerate(loader):
-    input_vars = torch.autograd.Variable(inputs.cuda(), volatile=True)
-    features, _ = resnet(input_vars)
-    features = features.cpu().data.numpy()
+    with torch.no_grad():
+      features, _ = resnet(inputs)
+      features = features.cpu().numpy()
     all_features.append( features )
     if i % args.print_freq == 0:
       print_log('{} {}/{} extract features'.format(time_string(), i, len(loader)), log)
@@ -210,7 +209,6 @@ def adjust_learning_rate(optimizer, epoch, args):
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr
     return lr
-
 
 def accuracy(output, target, topk=(1,)):
     """Computes the precision@k for the specified values of k"""

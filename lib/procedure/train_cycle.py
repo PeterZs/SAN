@@ -73,7 +73,7 @@ def train_cycle_gan(dataset, model, opt, log):
                 + '[{:02d}:{:02d}:{:02d}]  '.format(need_hour, need_mins, need_secs) \
                 + convert2string(errors), log)
 
-      if opt.visual_freq > 0 and ( i % opt.visual_freq == 0 or i + 1 == len(dataloader) ):
+      if (opt.visual_freq > 0) and (i % opt.visual_freq == 0 or i + 1 == len(dataloader)):
         visuals = model.get_current_visuals(True)
         vis_save_dir = osp.join(save_dir, 'visual', '{:03d}-{:04d}'.format(epoch, i))
         save_visual(vis_save_dir, visuals)

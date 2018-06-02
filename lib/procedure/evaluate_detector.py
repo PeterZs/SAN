@@ -19,7 +19,8 @@ def evaluation(eval_loaders, net, log, save_path, opt):
   for i, eval_loader in enumerate(eval_loaders):
     print_log('  Evaluate => [{:2d}/{:2d}]-th image dataset : {:}'.format(i, len(eval_loaders), opt.eval_lists[i]), log)
     isave_path = osp.join(save_path, 'eval-set-{:02d}'.format(i))
-    meta = evaluation_image(eval_loader, net, log, isave_path, opt)
+    with torch.no_grad():
+      meta = evaluation_image(eval_loader, net, log, isave_path, opt)
     meta.compute_mse(log)
     meta_path = osp.join(isave_path, 'evaluation.pth.tar')
     meta.save(meta_path)
@@ -47,14 +48,10 @@ def evaluation_image(eval_loader, net, log, save_path, opt):
     # inputs : Batch, Squence, Channel, Height, Width
     target = target.cuda(async=True)
     mask = mask.cuda(async=True)
-    input_vars = torch.autograd.Variable(inputs, volatile=True)
-    mask_var   = torch.autograd.Variable(mask, volatile=True)
-    target_var = torch.autograd.Variable(target, volatile=True)
-    points_var = torch.autograd.Variable(points, volatile=True)
 
     # forward, batch_locs [1 x points] [batch, 2]
-    batch_cpms, batch_locs, batch_scos, generated = net(input_vars)
-    assert batch_locs.size(0) == batch_scos.size(0) and batch_locs.size(0) == input_vars.size(0)
+    batch_cpms, batch_locs, batch_scos, generated = net(inputs)
+    assert batch_locs.size(0) == batch_scos.size(0) and batch_locs.size(0) == inputs.size(0)
     assert batch_locs.size(1) == num_pts + 1 and batch_scos.size(1) == num_pts + 1
     assert batch_locs.size(2) == 2 and len(batch_scos.size()) == 2
     np_batch_locs, np_batch_scos = variable2np(batch_locs), variable2np(batch_scos)
@@ -85,7 +82,7 @@ def evaluation_image(eval_loader, net, log, save_path, opt):
         save_error_image(image_path, xpoints, locations, opt.error_bar, errorpath, radius=5, color=(30,255,30), rev_color=(255,30,30), fontScale=10, text_color=(255,255,255))
     if opt.debug_save:
       print_log('DEBUG --- > [{:03d}/{:03d}] '.format(i, len(eval_loader)), log)
-      main_debug_save(debug_save_dir, eval_loader, image_index, input_vars, batch_locs, target, points, sign_list, batch_cpms, generated, log)
+      main_debug_save(debug_save_dir, eval_loader, image_index, inputs, batch_locs, target, points, sign_list, batch_cpms, generated, log)
 
     # measure elapsed time
     batch_time.update(time.time() - end)

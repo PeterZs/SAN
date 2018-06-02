@@ -135,23 +135,31 @@ class GeneralDataset(data.Dataset):
     assert len(self.datas) == self.length, 'The length is not correct : {}'.format(self.length)
     return self.length
 
+  def prepare_input(self, image, box):
+    meta = Point_Meta(self.NUM_PTS, None, np.array(box), image, self.dataset_name)
+    image = pil_loader( image )
+    return self._process_(image, meta, -1), meta
+
   def __getitem__(self, index):
     image = pil_loader( self.datas[index] )
+    xtarget = self.labels[index].copy()
+    return self._process_(image, target, index)
+
+  def _process_(self, image, xtarget, index):
 
     # Get the label
-    if self.labels[index].is_none():
+    if xtarget.is_none():
       visiable = None
     else:
-      visiable = self.labels[index].points[2, :].astype('bool')
-    target = self.labels[index].copy()
+      visiable = xtarget.points[2, :].astype('bool')
 
     # transform the image and points
     if self.transform is not None:
-      image, target = self.transform(image, target)
+      image, xtarget = self.transform(image, xtarget)
 
     # If for evaluation not load label, keeps the original data
-    if target.is_none() == False:
-      temp_save_wh = target.temp_save_wh
+    if xtarget.is_none() == False:
+      temp_save_wh = xtarget.temp_save_wh
       ori_size = torch.IntTensor( [temp_save_wh[1], temp_save_wh[0], temp_save_wh[2], temp_save_wh[3]] ) # H, W, Cropped_[x1,y1]
     else:
       ori_size = torch.IntTensor( [-1, -1, -1, -1] )
@@ -163,11 +171,11 @@ class GeneralDataset(data.Dataset):
     else:
       raise Exception('Unknown type of image : {}'.format( type(image) ))
 
-    if target.is_none() == False:
-      target.apply_bound(width, height)
-      points = target.points.copy()
+    if xtarget.is_none() == False:
+      xtarget.apply_bound(width, height)
+      points = xtarget.points.copy()
       points = torch.from_numpy(points.transpose((1,0))).type(torch.FloatTensor)
-      Hpoint = target.points.copy()
+      Hpoint = xtarget.points.copy()
     else:
       points = torch.from_numpy(np.zeros((self.NUM_PTS,3))).type(torch.FloatTensor)
       Hpoint = self.NUM_PTS
@@ -184,6 +192,6 @@ class GeneralDataset(data.Dataset):
     mask   = torch.from_numpy(mask.transpose((2, 0, 1))).type(torch.ByteTensor)
   
     torch_index = torch.IntTensor([index])
-    torch_indicate = torch.ByteTensor( [ self.labels[index].is_none() == False ] )
+    torch_indicate = torch.ByteTensor( [ xtarget.is_none() == False ] )
 
     return image, target, mask, points, torch_index, torch_indicate, ori_size
