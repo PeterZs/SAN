@@ -70,13 +70,14 @@ The above commands will pre-crop the face images, and save them into `./cache_da
 ### 300-W
 - Step-1 : cluster images into different groups, for example `sh scripts/300W/300W_Cluster.sh 0,1 GTB 3`.
 - Step-2 : use `sh scripts/300W/300W_CYCLE_128.sh 0,1 GTB` or `sh scripts/300W/300W_CYCLE_128.sh 0,1 DET` to train SAN on 300-W.
+- `GTB` means using the ground truth face bounding box, and `DET` means using the face detection results from a pre-trained detector (these results are provided from the official 300-W website).
 
 ### AFLW
 - Step-1 : cluster images into different groups, for example `sh scripts/AFLW/AFLW_Cluster.sh 0,1 GTB 3`.
 - Step-2 : use `sh scripts/AFLW/AFLW_CYCLE_128.FULL.sh` or `sh scripts/AFLW/AFLW_CYCLE_128.FRONT.sh` to train SAN on AFLW.
 
 ### Evaluation on the Single Image
-You can donwload a pre-trained model from the snapshots directory of [here](https://drive.google.com/open?id=14f2lcJVF6E4kIICd8icUs8UuF3J0Mutd), which is trained on 300-W. Put it in `snapshots` and use the following command to evaluate a single image. This command will print the location of each landmark.
+You can donwload a pre-trained model from the `snapshots` directory of [here](https://drive.google.com/open?id=14f2lcJVF6E4kIICd8icUs8UuF3J0Mutd), which is trained on 300-W. Put it in `snapshots` and use the following command to evaluate a single image. This command will print the location of each landmark.
 ```
 CUDA_VISIBLE_DEVICES=1 python san_eval.py --image ./cache_data/cache/test_1.jpg --model ./snapshots/SAN_300W_GTB_itn_cpm_3_50_sigma4_128x128x8/checkpoint_49.pth.tar --face 819.27 432.15 971.70 575.87
 ```
