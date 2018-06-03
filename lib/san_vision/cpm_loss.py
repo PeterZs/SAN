@@ -20,13 +20,13 @@ def compute_stage_loss(criterion, target_var, outputs, mask_var, total_labeled_c
 
     stage_loss = criterion(output, target) / (total_labeled_cpm*2)
     total_loss = total_loss + stage_loss
-    each_stage_loss.append(stage_loss.data[0])
+    each_stage_loss.append(stage_loss.item())
   if weight_of_idt is not None and weight_of_idt > 0:
     pair_loss_a = torch.sum( torch.abs(mask_outputs[0] - mask_outputs[1]) )
     pair_loss_b = torch.sum( torch.abs(mask_outputs[0] - mask_outputs[2]) )
     pair_loss_c = torch.sum( torch.abs(mask_outputs[1] - mask_outputs[2]) )
     identity_loss = weight_of_idt * (pair_loss_a + pair_loss_b + pair_loss_c) / 3
-    each_stage_loss.append(identity_loss.data[0])
+    each_stage_loss.append(identity_loss.item())
     total_loss = total_loss + identity_loss
   return total_loss, each_stage_loss
 
@@ -46,5 +46,5 @@ def sum_stage_loss(losses):
       total_loss = loss
     else:
       total_loss = total_loss + loss
-    each_stage_loss.append(loss.data[0])
+    each_stage_loss.append(loss.item())
   return total_loss, each_stage_loss

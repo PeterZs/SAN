@@ -76,11 +76,18 @@ The above commands will pre-crop the face images, and save them into `./cache_da
 - Step-2 : use `sh scripts/AFLW/AFLW_CYCLE_128.FULL.sh` or `sh scripts/AFLW/AFLW_CYCLE_128.FRONT.sh` to train SAN on AFLW.
 
 ### Evaluation on the Single Image
+You can donwload a pre-trained model from [here](), which is trained on 300-W. Put it in `snapshots` and use the following command to evaluate a single image.
+```
+CUDA_VISIBLE_DEVICES=1 python san_eval.py --image ./cache_data/cache/test_1.jpg --model ./snapshots/SAN_300W_GTB_itn_cpm_3_50_sigma4_128x128x8/checkpoint_49.pth.tar --face 819.27 432.15 971.70 575.87
+```
+The ground truth landmark annotation for `./cache_data/cache/test_1.jpg` is `./cache_data/cache/test_1.pts`.
+
 
 ### Normalization
 
 <img src="cache_data/cache/figure_1_68.jpg" width="480">
 Figure 2. We use the distance between the outer corners of the eyes, i.e., the 37-th and the 46-th points, for normalization.
+
 
 ## Citation
 If this project helps your research, please cite the following papers:
@@ -98,6 +105,7 @@ If this project helps your research, please cite the following papers:
   year={2018}
 }
 ```
+
 
 ## Contact
 To ask questions or report issues, please open an issue on the [issues tracker](https://github.com/D-X-Y/SAN/issues).

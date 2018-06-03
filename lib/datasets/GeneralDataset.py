@@ -143,7 +143,7 @@ class GeneralDataset(data.Dataset):
   def __getitem__(self, index):
     image = pil_loader( self.datas[index] )
     xtarget = self.labels[index].copy()
-    return self._process_(image, target, index)
+    return self._process_(image, xtarget, index)
 
   def _process_(self, image, xtarget, index):
 
@@ -158,11 +158,8 @@ class GeneralDataset(data.Dataset):
       image, xtarget = self.transform(image, xtarget)
 
     # If for evaluation not load label, keeps the original data
-    if xtarget.is_none() == False:
-      temp_save_wh = xtarget.temp_save_wh
-      ori_size = torch.IntTensor( [temp_save_wh[1], temp_save_wh[0], temp_save_wh[2], temp_save_wh[3]] ) # H, W, Cropped_[x1,y1]
-    else:
-      ori_size = torch.IntTensor( [-1, -1, -1, -1] )
+    temp_save_wh = xtarget.temp_save_wh
+    ori_size = torch.IntTensor( [temp_save_wh[1], temp_save_wh[0], temp_save_wh[2], temp_save_wh[3]] ) # H, W, Cropped_[x1,y1]
         
     if isinstance(image, Image.Image):
       height, width = image.size[1], image.size[0]
