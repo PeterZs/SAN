@@ -100,13 +100,15 @@ If this project helps your research, please cite the following papers:
 @inproceedings{dong2018san,
    title={Style Aggregated Network for Facial Landmark Detection},
    author={Dong, Xuanyi and Yan, Yan and Ouyang, Wanli and Yang, Yi},
-   booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+   booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+   pages={379--388},
    year={2018}
 }
 @inproceedings{dong2018sbr,
   title={{Supervision-by-Registration}: An Unsupervised Approach to Improve the Precision of Facial Landmark Detectors},
   author={Dong, Xuanyi and Yu, Shoou-I and Weng, Xinshuo and Wei, Shih-En and Yang, Yi and Sheikh, Yaser},
-  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+  pages={360--368},
   year={2018}
 }
 ```
