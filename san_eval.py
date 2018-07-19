@@ -31,9 +31,9 @@ def evaluate(args):
   assert len(args.face) == 4, 'Invalid face input : {:}'.format(args.face)
   snapshot = torch.load(snapshot)
 
-  mean_fill   = tuple( [int(x*255) for x in [0.485, 0.456, 0.406] ] )
-  normalize   = transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                      std=[0.229, 0.224, 0.225])
+  mean_fill   = tuple( [int(x*255) for x in [0.5, 0.5, 0.5] ] )
+  normalize   = transforms.Normalize(mean=[0.5, 0.5, 0.5],
+                                      std=[0.5, 0.5, 0.5])
   param = snapshot['args']
   eval_transform  = transforms.Compose([transforms.PreCrop(param.pre_crop_expand), transforms.TrainScale2WH((param.crop_width, param.crop_height)),  transforms.ToTensor(), normalize])
 
