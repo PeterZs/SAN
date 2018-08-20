@@ -18,6 +18,12 @@ This project is inspired by [supervision-by-registration](https://github.com/fac
 <img src="cache_data/cache/dataset.jpg" width="480">
 Figure 1. Our 300W-Style and AFLW-Style datasets. There are four styles, original, sketch, light, and gray.
 
+If you can't download the datasets via the above link, please try:
+```
+300W-Style : https://drive.google.com/open?id=1wy9ZUSWE4V2WdMbXS3Jkq7kQEYHSpLk1
+AFLW-Style : https://drive.google.com/open?id=1y5JrOd86NGHTPZLYLgeqRJzT2T4ACWJe
+```
+
 ##### 300W-Style Directory
 `300W-Style.tgz` should be extracted into `~/datasets/300W-Style` by typing `tar xzvf 300W-Style.tgz; mv 300W-Convert 300W-Style`.
 It has the following structure:
