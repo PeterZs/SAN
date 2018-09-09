@@ -9,10 +9,10 @@ import copy, numbers, numpy as np
 def np2variable(x, is_cuda=True, requires_grad=True, dtype=torch.FloatTensor):
   if isinstance(x, np.ndarray):
     v = torch.autograd.Variable(torch.from_numpy(x).type(dtype), requires_grad=requires_grad)
-  elif isinstance(x, torch.FloatTensor):
+  elif isinstance(x, torch.FloatTensor) or isinstance(x, torch.Tensor):
     v = torch.autograd.Variable(x.type(dtype), requires_grad=requires_grad)
   else:
-    raise Exception('Do not know this type : {}'.format( type(x) ))
+    raise Exception('Do not know this type : {:}'.format( type(x) ))
 
   if is_cuda: return v.cuda()
   else:       return v
