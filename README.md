@@ -93,6 +93,12 @@ CUDA_VISIBLE_DEVICES=1 python san_eval.py --image ./cache_data/cache/test_1.jpg 
 The parameter `image` is the image path to be evaluated, `model` is the trained SAN model, and `face` denotes the coordinates of the face bounding box.
 The ground truth landmark annotation for `./cache_data/cache/test_1.jpg` is `./cache_data/cache/test_1.pts`.
 
+### Evaluate on 300-W
+Download the pre-trained model from the `snapshots` directory of [here](https://drive.google.com/open?id=14f2lcJVF6E4kIICd8icUs8UuF3J0Mutd), which is trained on 300-W. Put it in `snapshots` and use the following command to evaluate on 300-W
+```
+bash scripts/300W/300W-EVAL.sh 0
+```
+
 
 ### Normalization
 

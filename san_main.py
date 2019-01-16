@@ -103,7 +103,7 @@ def main():
     print_log('Cycle-data initialize done : {}'.format(cycledata), log)
 
     args.cycle_model_path = procedure.train_cycle_gan(cycledata, itnetwork, args, log)
-  assert osp.isdir(args.cycle_model_path), '{} does not exist or is not dir.'.format(args.cycle_model_path)
+  assert osp.isdir(args.cycle_model_path), '{:} does not exist or is not dir.'.format(args.cycle_model_path)
 
   # start train itn-cpm model
   itn_cpm = models.__dict__[args.arch](args.modelconfig, args.cycle_model_path)

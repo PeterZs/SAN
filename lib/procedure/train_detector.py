@@ -44,6 +44,7 @@ def train_san_epoch(opt, net, train_loader, eval_loaders, log):
       print_log('pure resume, only load the parameters, skip optimizer and start-epoch', log)
     if opt.eval_once:
       evaluation(eval_loaders, net, log, osp.join(opt.save_path, 'epoch-once'), opt)
+      return
       
 
 
