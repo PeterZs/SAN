@@ -75,13 +75,13 @@ The above commands will pre-crop the face images, and save them into `./cache_da
 ## Training and Evaluation
 
 ### 300-W
-- Step-1 : cluster images into different groups, for example `sh scripts/300W/300W_Cluster.sh 0,1 GTB 3`.
-- Step-2 : use `sh scripts/300W/300W_CYCLE_128.sh 0,1 GTB` or `sh scripts/300W/300W_CYCLE_128.sh 0,1 DET` to train SAN on 300-W.
+- Step-1 : cluster images into different groups, for example `bash scripts/300W/300W_Cluster.sh 0,1 GTB 3`.
+- Step-2 : use `bash scripts/300W/300W_CYCLE_128.sh 0,1 GTB` or `bash scripts/300W/300W_CYCLE_128.sh 0,1 DET` to train SAN on 300-W.
 - `GTB` means using the ground truth face bounding box, and `DET` means using the face detection results from a pre-trained detector (these results are provided from the official 300-W website).
 
 ### AFLW
-- Step-1 : cluster images into different groups, for example `sh scripts/AFLW/AFLW_Cluster.sh 0,1 GTB 3`.
-- Step-2 : use `sh scripts/AFLW/AFLW_CYCLE_128.FULL.sh` or `sh scripts/AFLW/AFLW_CYCLE_128.FRONT.sh` to train SAN on AFLW.
+- Step-1 : cluster images into different groups, for example `bash scripts/AFLW/AFLW_Cluster.sh 0,1 GTB 3`.
+- Step-2 : use `bash scripts/AFLW/AFLW_CYCLE_128.FULL.sh` or `bash scripts/AFLW/AFLW_CYCLE_128.FRONT.sh` to train SAN on AFLW.
 
 
 ### Evaluation on the Single Image
@@ -105,6 +105,9 @@ bash scripts/300W/300W-EVAL.sh 0
 <img src="cache_data/cache/figure_1_68.jpg" width="480">
 Figure 2. We use the distance between the outer corners of the eyes, i.e., the 37-th and the 46-th points, for normalization.
 
+
+## Correction
+In the Table 1 of [the paper](http://openaccess.thecvf.com/content_cvpr_2018/papers/Dong_Style_Aggregated_Network_CVPR_2018_paper.pdf), SDM / ESR / LBF / CFSS use the inter-pupil distance for normalization, but we use the inter-ocular distance. If they also use the inter-ocular distance, they can obtain a smaller NME.
 
 ## Citation
 If this project helps your research, please cite the following papers:
