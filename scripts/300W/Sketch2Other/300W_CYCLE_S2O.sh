@@ -36,5 +36,5 @@ CUDA_VISIBLE_DEVICES=${gpus} python san_main.py \
     --crop_height ${height} --crop_width ${width} --crop_perturb_max 30 \
     --sigma ${sigma} --print_freq 50 --print_freq_eval 100 --pretrain \
     --evaluation --heatmap_type gaussian --argmax_size 3 \
-    --epoch_count 1 --niter 100 --niter_decay 100 --cycle_batchSize 1 --identity 0.1 \
+    --epoch_count 1 --niter 100 --niter_decay 100 --identity 0.1 \
     --cycle_batchSize 32 
