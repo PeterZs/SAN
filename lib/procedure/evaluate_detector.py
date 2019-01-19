@@ -13,7 +13,7 @@ from models import variable2np
 from debug import main_debug_save
 
 def evaluation(eval_loaders, net, log, save_path, opt):
-  print_log('Evaluation => {} image datasets and {} video datasets, save into {}'.format(len(eval_loaders), len(eval_loaders), save_path), log)
+  print_log('Evaluation => {} datasets, save into {}'.format(len(eval_loaders), save_path), log)
   if not osp.isdir(save_path): os.makedirs( save_path )
   assert osp.isdir(save_path), 'The save path {} is not a dir'.format(save_path)
   for i, eval_loader in enumerate(eval_loaders):
