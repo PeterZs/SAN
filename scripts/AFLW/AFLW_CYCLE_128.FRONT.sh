@@ -24,7 +24,7 @@ CUDA_VISIBLE_DEVICES=${gpus} python san_main.py \
     --cycle_b_lists ./snapshots/CLUSTER-AFLW_GTB-3/cluster-02-03.lst \
     --num_pts 19 --pre_crop_expand 0.2 \
     --arch ${model} --cpm_stage ${stages} \
-    --save_path ./snapshots/ITN_${dataset_name}_${model}_${stages}_${epochs}_sigma${sigma}_${height}x${width}x8 \
+    --save_path ./snapshots/SAN_${dataset_name}_${model}_${stages}_${epochs}_sigma${sigma}_${height}x${width}x8 \
     --learning_rate 0.00005 --decay 0.0005 --batch_size ${batch_size} --workers 20 --gpu_ids 0,1 \
     --epochs ${epochs} --schedule 30 35 40 45 --gammas 0.5 0.5 0.5 0.5 \
     --dataset_name ${dataset_name} \

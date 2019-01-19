@@ -29,7 +29,7 @@ python san_main.py \
     --cycle_model_path ./snapshots/SAN_300W_GTB_itn_cpm_3_50_sigma4_128x128x8/cycle-gan/itn-epoch-200-201 \
     --eval_once \
     --save_path ./snapshots/SAN_${dataset_name}_${model}_${stages}_${epochs}_sigma${sigma}_${height}x${width}x8-Only-Eval \
-    --learning_rate 0.00005 --decay 0.0005 --batch_size ${batch_size} --workers 20 --gpu_ids $1 \
+    --learning_rate 0.00005 --decay 0.0005 --batch_size ${batch_size} --workers 20 --gpu_ids ${gpus} \
     --epochs ${epochs} --schedule 30 35 40 45 --gammas 0.5 0.5 0.5 0.5 \
     --dataset_name ${dataset_name} \
     --scale_min 1 --scale_max 1 --scale_eval 1 --eval_batch ${batch_size} \
