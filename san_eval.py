@@ -15,6 +15,7 @@ import init_path
 import torch
 import models
 import datasets
+from visualization import draw_image_by_points
 from san_vision import transforms
 from utils import time_string, time_for_file
 
@@ -66,13 +67,20 @@ def evaluate(args):
   prediction = np.concatenate((locations, scores), axis=1).transpose(1,0)
   for i in range(param.num_pts):
     point = prediction[:, i]
-    print ('{:02d}/{:02d} : ({:.1f}, {:.1f}), score = {:.3f}'.format(i, param.num_pts, float(point[0]), float(point[1]), float(point[2])))
+    print ('The coordinate of {:02d}/{:02d}-th points : ({:.1f}, {:.1f}), score = {:.3f}'.format(i, param.num_pts, float(point[0]), float(point[1]), float(point[2])))
+
+  if args.save_path:
+    image = draw_image_by_points(args.image, prediction, 1, (255,0,0), False, False)
+    image.save( args.save_path )
+    print ('save image with landmarks into {:}'.format(args.save_path))
+  print('finish san evaluation on a single image : {:}'.format(args.image))
 
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser(description='Evaluate a single image by the trained model', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
   parser.add_argument('--image',            type=str,   help='The evaluation image path.')
   parser.add_argument('--model',            type=str,   help='The snapshot to the saved detector.')
-  parser.add_argument('--face',  nargs='+', type=float,   help='The coordinate [x1,y1,x2,y2] of a face')
+  parser.add_argument('--face',  nargs='+', type=float, help='The coordinate [x1,y1,x2,y2] of a face')
+  parser.add_argument('--save_path',        type=str,   help='The path to save the visualization results')
   args = parser.parse_args()
   evaluate(args)
