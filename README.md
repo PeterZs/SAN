@@ -15,14 +15,16 @@ This project is inspired by [supervision-by-registration](https://github.com/fac
 - In 300W-Style and AFLW-Style directories, the `Original` sub-directory contains the original images from [300-W](https://ibug.doc.ic.ac.uk/resources/300-W/) and [AFLW](https://www.tugraz.at/institute/icg/research/team-bischof/lrs/downloads/aflw/)
 - The sketch, light, and gray style images are used to analyze the image style variance in facial landmark detection.
 - For simplification, we change some file names, such as removing the space or unifying the file extension.
-<img src="cache_data/cache/dataset.jpg" width="480">
-Figure 1. Our 300W-Style and AFLW-Style datasets. There are four styles, original, sketch, light, and gray.
 
 If you can't download the datasets via the above link, please try:
 ```
 300W-Style : https://drive.google.com/open?id=1wy9ZUSWE4V2WdMbXS3Jkq7kQEYHSpLk1
 AFLW-Style : https://drive.google.com/open?id=1y5JrOd86NGHTPZLYLgeqRJzT2T4ACWJe
 ```
+
+<img src="cache_data/cache/dataset.jpg" width="480">
+Figure 1. Our 300W-Style and AFLW-Style datasets. There are four styles, original, sketch, light, and gray.
+
 
 ##### 300W-Style Directory
 `300W-Style.tgz` should be extracted into `~/datasets/300W-Style` by typing `tar xzvf 300W-Style.tgz; mv 300W-Convert 300W-Style`.
