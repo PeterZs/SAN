@@ -11,7 +11,7 @@ This project is inspired by [supervision-by-registration](https://github.com/fac
 - [torchvision](http://pytorch.org/docs/master/torchvision)
 
 ### Datasets Download
-- Download 300W-Style and AFLW-Style from [Google Drive](https://drive.google.com/open?id=14f2lcJVF6E4kIICd8icUs8UuF3J0Mutd), and extract the downloaded files into `~/datasets/`.
+- Download 300W-Style and AFLW-Style from [Google Drive](https://drive.google.com/open?id=14f2lcJVF6E4kIICd8icUs8UuF3J0Mutd), and extract the downloaded files into `~/datasets/`. Since the tgz files for 300W-Style and AFLW-Style are too large to download, I split them into several small parts in the `300W-Style-Splits` folder and the `AFLW-Style-Splits` folder on Google Drive. You can download all parts and use `cat 300W-Style.tgz.parta* > 300W-Style.tgz` and `cat AFLW-Style.tgz.parta* > AFLW-Style.tgz` to get the original tgz file.
 - In 300W-Style and AFLW-Style directories, the `Original` sub-directory contains the original images from [300-W](https://ibug.doc.ic.ac.uk/resources/300-W/) and [AFLW](https://www.tugraz.at/institute/icg/research/team-bischof/lrs/downloads/aflw/)
 - The sketch, light, and gray style images are used to analyze the image style variance in facial landmark detection.
 - For simplification, we change some file names, such as removing the space or unifying the file extension.
