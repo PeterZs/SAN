@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# bash ./scripts/300W/300W_Cluster_Simple.sh 0,1 GTB 3
 echo script name: $0
 echo $# arguments
 if [ "$#" -ne 3 ] ;then
@@ -15,11 +16,10 @@ dataset_name=300W_$2
 
 CUDA_VISIBLE_DEVICES=${gpus} python cluster.py \
     --style_train_root ./cache_data/cache/300W \
-    --style_eval_root ./cache_data/cache/AFLW \
     --train_list ./cache_data/lists/300W/Original/300w.train.$2 \
         	 ./cache_data/lists/300W/Original/300w.test.full.$2 \
     --learning_rate 0.01 --epochs 2 \
-    --save_path ./snapshots/CLUSTER-${dataset_name}-${cluster} \
+    --save_path ./snapshots/CLUSTER-${dataset_name}-${cluster}-TEST \
     --num_pts 68 --pre_crop_expand 0.2 \
     --dataset_name ${dataset_name} \
     --scale_min 1 --scale_max 1 --scale_eval 1 --eval_batch ${batch_size} --batch_size ${batch_size} \

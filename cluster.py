@@ -67,8 +67,8 @@ def main():
   assert osp.isdir(cls_train_dir), 'Does not know : {}'.format(cls_train_dir)
   # train data loader
   vision_normalize = visiontransforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-  print_log('Training dir : {}'.format(cls_train_dir), log)
-  print_log('Evaluate dir : {}'.format(cls_eval_dir), log)
+  print_log('Training dir : {:}'.format(cls_train_dir), log)
+  print_log('Evaluate dir : {:}'.format(cls_eval_dir), log)
   cls_train_dataset = visiondatasets.ImageFolder(
         cls_train_dir,
         visiontransforms.Compose([
@@ -77,6 +77,8 @@ def main():
             visiontransforms.ToTensor(),
             vision_normalize,
         ]))
+  print_log('Training Dataset : {:}'.format(cls_train_dataset), log)
+  assert len(cls_train_dataset.classes) == 4, 'There should have 4 kinds of classes instead of : {:}'.format(cls_train_dataset.classes)
 
   cls_train_loader = torch.utils.data.DataLoader(
         cls_train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=args.workers, pin_memory=True)
