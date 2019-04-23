@@ -16,6 +16,8 @@ This project is inspired by [supervision-by-registration](https://github.com/fac
 - The sketch, light, and gray style images are used to analyze the image style variance in facial landmark detection.
 - For simplification, we change some file names, such as removing the space or unifying the file extension.
 
+In `cluster.py`, we use ResNet-152 to classify the 4 style class of 300W-Style and AFLW-Style, it obtains 93.5% accuracy (training on 300W-Style and evaluating on AFLW-Style), and 96.6% accuracy (training on AFLW-Style and evaluating on 300W-Style).
+
 If you can't download the datasets via the above link, please try:
 ```
 300W-Style : https://drive.google.com/open?id=1wy9ZUSWE4V2WdMbXS3Jkq7kQEYHSpLk1
